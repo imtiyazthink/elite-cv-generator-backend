@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { UserProfessionalDetailService } from './user-professional-detail.service';
 import { CreateUserProfessionalDetailDto } from './dto/create-user-professional-detail.dto';
 import { UpdateUserProfessionalDetailDto } from './dto/update-user-professional-detail.dto';
@@ -22,7 +22,7 @@ export class UserProfessionalDetailController {
     return this.userProfessionalDetailService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateUserProfessionalDetailDto: UpdateUserProfessionalDetailDto) {
     return this.userProfessionalDetailService.update(id, updateUserProfessionalDetailDto);
   }
