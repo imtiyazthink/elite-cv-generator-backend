@@ -1,5 +1,3 @@
-export class User {}
-
 export class UserPersonDetail {
   firstName: string;
   lastName: string;

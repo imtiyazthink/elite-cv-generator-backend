@@ -4,15 +4,15 @@ import { Model } from 'mongoose';
 import { CreateUserPersonalDetailDto } from './dto/create-user-perosnal-detail.dto';
 import { UpdateUserPersonalDetailDto } from './dto/update-user-personal-detail.dto';
 import {
-  UserPersonDetail,
-  UserPersonDetailDocument,
-} from './schema/user-personal..schema';
+  UserPersonalDetail,
+  UserPersonalDetailDocument,
+} from './schema/user-personal.schema';
 
 @Injectable()
-export class UserService {
+export class UserPersonalDetailService {
   constructor(
-    @InjectModel(UserPersonDetail.name)
-    private readonly userPersonalDetailModel: Model<UserPersonDetailDocument>,
+    @InjectModel(UserPersonalDetail.name)
+    private readonly userPersonalDetailModel: Model<UserPersonalDetailDocument>,
   ) {}
 
   async create(createUserPersonalDetailDto: CreateUserPersonalDetailDto) {
