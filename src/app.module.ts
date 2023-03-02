@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserPersonalDetailModule } from './user-perosnal-detail/user-perosnal-detail.module';
 import { UserProfessionalDetailModule } from './user-professional-detail/user-professional-detail.module';
+import { UserTechnicalSkillModule } from './user-technical-skill/user-technical-skill.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserProfessionalDetailModule } from './user-professional-detail/user-pr
     MongooseModule.forRoot(process.env.MONGODB_URI),
     UserPersonalDetailModule,
     UserProfessionalDetailModule,
+    UserTechnicalSkillModule,
   ],
   controllers: [AppController],
   providers: [AppService],
