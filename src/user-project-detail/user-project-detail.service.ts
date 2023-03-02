@@ -50,7 +50,7 @@ export class UserProjectDetailService {
         id,
       );
       if (!userProjectDetailById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       return {
         data: userProjectDetailById,
@@ -71,7 +71,7 @@ export class UserProjectDetailService {
         id,
       );
       if (!userProjectDetailById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const updatedUserPerosnalDetail =
         await this.userProjectDetailModel.findByIdAndUpdate(
@@ -95,7 +95,7 @@ export class UserProjectDetailService {
         id,
       );
       if (!userProjectDetailById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const deletedUserProjectDetail =
         await this.userProjectDetailModel.findByIdAndRemove(id);

@@ -48,7 +48,7 @@ export class UserProjectInfoService {
     try {
       const userProjectInoById = await this.userProjectInfoModel.findById(id);
       if (!userProjectInoById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       return {
         data: userProjectInoById,
@@ -64,7 +64,7 @@ export class UserProjectInfoService {
     try {
       const userProjectInoById = await this.userProjectInfoModel.findById(id);
       if (!userProjectInoById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const updatedUserPerosnalDetail =
         await this.userProjectInfoModel.findByIdAndUpdate(
@@ -86,7 +86,7 @@ export class UserProjectInfoService {
     try {
       const userProjectInoById = await this.userProjectInfoModel.findById(id);
       if (!userProjectInoById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const deletedUserProjectInos =
         await this.userProjectInfoModel.findByIdAndRemove(id);

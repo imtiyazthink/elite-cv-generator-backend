@@ -51,7 +51,7 @@ export class UserTechnicalSkillService {
       const userTechnicalSkillById =
         await this.userTechnicalSkillModel.findById(id);
       if (!userTechnicalSkillById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       return {
         data: userTechnicalSkillById,
@@ -71,7 +71,7 @@ export class UserTechnicalSkillService {
       const userTechnicalSkillById =
         await this.userTechnicalSkillModel.findById(id);
       if (!userTechnicalSkillById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const updatedUserPerosnalDetail =
         await this.userTechnicalSkillModel.findByIdAndUpdate(
@@ -94,7 +94,7 @@ export class UserTechnicalSkillService {
       const userTechnicalSkillById =
         await this.userTechnicalSkillModel.findById(id);
       if (!userTechnicalSkillById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const deletedUserTechnicalSkills =
         await this.userTechnicalSkillModel.findByIdAndRemove(id);

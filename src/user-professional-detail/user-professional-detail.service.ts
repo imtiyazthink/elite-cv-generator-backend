@@ -53,7 +53,7 @@ export class UserProfessionalDetailService {
       const userProfessionalDetailById =
         await this.userProfessionalDetailModel.findById(id);
       if (!userProfessionalDetailById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       return {
         data: userProfessionalDetailById,
@@ -73,7 +73,7 @@ export class UserProfessionalDetailService {
       const userProfessionalDetailById =
         await this.userProfessionalDetailModel.findById(id);
       if (!userProfessionalDetailById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const updatedUserPerosnalDetail =
         await this.userProfessionalDetailModel.findByIdAndUpdate(
@@ -96,7 +96,7 @@ export class UserProfessionalDetailService {
       const userProfessionalDetailById =
         await this.userProfessionalDetailModel.findById(id);
       if (!userProfessionalDetailById) {
-        throw new HttpException("User Doesn't Exist!", HttpStatus.NOT_FOUND);
+        throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
       const deletedUserProfessionalDetails =
         await this.userProfessionalDetailModel.findByIdAndRemove(id);
