@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UserPersonalDetailModule } from './user-perosnal-detail/user-perosnal-detail.module';
 import { UserProfessionalDetailModule } from './user-professional-detail/user-professional-detail.module';
 import { UserTechnicalSkillModule } from './user-technical-skill/user-technical-skill.module';
+import { UserProjectInfoModule } from './user-project-info/user-project-info.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserTechnicalSkillModule } from './user-technical-skill/user-technical-
     UserPersonalDetailModule,
     UserProfessionalDetailModule,
     UserTechnicalSkillModule,
+    UserProjectInfoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
