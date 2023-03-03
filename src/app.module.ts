@@ -8,6 +8,8 @@ import { UserProfessionalDetailModule } from './user-professional-detail/user-pr
 import { UserTechnicalSkillModule } from './user-technical-skill/user-technical-skill.module';
 import { UserProjectInfoModule } from './user-project-info/user-project-info.module';
 import { UserProjectDetailModule } from './user-project-detail/user-project-detail.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { UserProjectDetailModule } from './user-project-detail/user-project-deta
     UserTechnicalSkillModule,
     UserProjectInfoModule,
     UserProjectDetailModule,
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
