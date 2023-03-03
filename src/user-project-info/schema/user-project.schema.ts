@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export type UserProjectInfoDocument = UserProjectInfo & Document;
 
@@ -16,6 +16,9 @@ export class UserProjectInfo {
 
   @Prop()
   description: string;
+
+  @Prop()
+  creator: mongoose.Types.ObjectId;
 }
 
 export const UserProjectInfoSchema =

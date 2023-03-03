@@ -15,11 +15,15 @@ export class UserProjectInfoService {
     private readonly userProjectInfoModel: Model<UserProjectInfoDocument>,
   ) {}
 
-  async create(createUserProjectInfoDto: CreateUserProjectInfoDto) {
+  async create(
+    createUserProjectInfoDto: CreateUserProjectInfoDto,
+    creatorId: string,
+  ) {
     try {
-      const userProjectIno = new this.userProjectInfoModel(
-        createUserProjectInfoDto,
-      );
+      const userProjectIno = new this.userProjectInfoModel({
+        ...createUserProjectInfoDto,
+        creator: creatorId,
+      });
       const newuserProjectIno = await userProjectIno.save();
       return {
         data: newuserProjectIno,
@@ -31,9 +35,11 @@ export class UserProjectInfoService {
     }
   }
 
-  async findAll() {
+  async findAll(creatorId: string) {
     try {
-      const userProjectInos = await this.userProjectInfoModel.find().exec();
+      const userProjectInos = await this.userProjectInfoModel
+        .find({ creator: creatorId })
+        .exec();
       return {
         data: userProjectInos,
         message: 'User Project Information Retrieved Successfully!',
@@ -44,9 +50,11 @@ export class UserProjectInfoService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, creatorId: string) {
     try {
-      const userProjectInoById = await this.userProjectInfoModel.findById(id);
+      const userProjectInoById = await this.userProjectInfoModel.findOne({
+        creator: creatorId,
+      });
       if (!userProjectInoById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -60,9 +68,15 @@ export class UserProjectInfoService {
     }
   }
 
-  async update(id: string, updateUserProjectInoDto: UpdateUserProjectInfoDto) {
+  async update(
+    id: string,
+    updateUserProjectInoDto: UpdateUserProjectInfoDto,
+    creatorId: string,
+  ) {
     try {
-      const userProjectInoById = await this.userProjectInfoModel.findById(id);
+      const userProjectInoById = await this.userProjectInfoModel.findOne({
+        creator: creatorId,
+      });
       if (!userProjectInoById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -82,9 +96,11 @@ export class UserProjectInfoService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, creatorId: string) {
     try {
-      const userProjectInoById = await this.userProjectInfoModel.findById(id);
+      const userProjectInoById = await this.userProjectInfoModel.findOne({
+        creator: creatorId,
+      });
       if (!userProjectInoById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }

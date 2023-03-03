@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export type UserPersonalDetailDocument = UserPersonalDetail & Document;
 
@@ -22,6 +22,9 @@ export class UserPersonalDetail {
 
   @Prop()
   dob: string;
+
+  @Prop()
+  creator: mongoose.Types.ObjectId;
 }
 
 export const UserPersonalDetailSchema =

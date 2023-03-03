@@ -15,11 +15,15 @@ export class UserTechnicalSkillService {
     private readonly userTechnicalSkillModel: Model<UserTechnicalSkillDocument>,
   ) {}
 
-  async create(createUserTechnicalSkillDto: CreateUserTechnicalSkillDto) {
+  async create(
+    createUserTechnicalSkillDto: CreateUserTechnicalSkillDto,
+    creatorId: string,
+  ) {
     try {
-      const userTechnicalSkill = new this.userTechnicalSkillModel(
-        createUserTechnicalSkillDto,
-      );
+      const userTechnicalSkill = new this.userTechnicalSkillModel({
+        ...createUserTechnicalSkillDto,
+        creator: creatorId,
+      });
       const newuserTechnicalSkill = await userTechnicalSkill.save();
       return {
         data: newuserTechnicalSkill,
@@ -31,10 +35,10 @@ export class UserTechnicalSkillService {
     }
   }
 
-  async findAll() {
+  async findAll(creatorId: string) {
     try {
       const userTechnicalSkills = await this.userTechnicalSkillModel
-        .find()
+        .find({ creator: creatorId })
         .exec();
       return {
         data: userTechnicalSkills,
@@ -46,10 +50,11 @@ export class UserTechnicalSkillService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, creatorId: string) {
     try {
-      const userTechnicalSkillById =
-        await this.userTechnicalSkillModel.findById(id);
+      const userTechnicalSkillById = await this.userTechnicalSkillModel.findOne(
+        { creator: creatorId },
+      );
       if (!userTechnicalSkillById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -66,10 +71,12 @@ export class UserTechnicalSkillService {
   async update(
     id: string,
     updateUserTechnicalSkillDto: UpdateUserTechnicalSkillDto,
+    creatorId: string,
   ) {
     try {
-      const userTechnicalSkillById =
-        await this.userTechnicalSkillModel.findById(id);
+      const userTechnicalSkillById = await this.userTechnicalSkillModel.findOne(
+        { creator: creatorId },
+      );
       if (!userTechnicalSkillById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -89,10 +96,11 @@ export class UserTechnicalSkillService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, creatorId: string) {
     try {
-      const userTechnicalSkillById =
-        await this.userTechnicalSkillModel.findById(id);
+      const userTechnicalSkillById = await this.userTechnicalSkillModel.findOne(
+        { creator: creatorId },
+      );
       if (!userTechnicalSkillById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }

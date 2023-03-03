@@ -15,11 +15,15 @@ export class UserProjectDetailService {
     private readonly userProjectDetailModel: Model<UserProjectDetailDocument>,
   ) {}
 
-  async create(createUserProjectDetailDto: CreateUserProjectDetailDto) {
+  async create(
+    createUserProjectDetailDto: CreateUserProjectDetailDto,
+    creatorId: string,
+  ) {
     try {
-      const userProjectDetail = new this.userProjectDetailModel(
+      const userProjectDetail = new this.userProjectDetailModel({
         createUserProjectDetailDto,
-      );
+        creator: creatorId,
+      });
       const newuserProjectDetail = await userProjectDetail.save();
       return {
         data: newuserProjectDetail,
@@ -31,9 +35,11 @@ export class UserProjectDetailService {
     }
   }
 
-  async findAll() {
+  async findAll(creatorId: string) {
     try {
-      const userProjectDetail = await this.userProjectDetailModel.find().exec();
+      const userProjectDetail = await this.userProjectDetailModel
+        .find({ creator: creatorId })
+        .exec();
       return {
         data: userProjectDetail,
         message: 'User Project Detail Retrieved Successfully!',
@@ -44,11 +50,12 @@ export class UserProjectDetailService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, creatorId: string) {
     try {
-      const userProjectDetailById = await this.userProjectDetailModel.findById(
-        id,
-      );
+      const userProjectDetailById = await this.userProjectDetailModel.findOne({
+        _id: id,
+        creator: creatorId,
+      });
       if (!userProjectDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -65,11 +72,13 @@ export class UserProjectDetailService {
   async update(
     id: string,
     updateUserProjectDetailDto: UpdateUserProjectDetailDto,
+    creatorId: string,
   ) {
     try {
-      const userProjectDetailById = await this.userProjectDetailModel.findById(
-        id,
-      );
+      const userProjectDetailById = await this.userProjectDetailModel.findOne({
+        _id: id,
+        creator: creatorId,
+      });
       if (!userProjectDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -89,11 +98,12 @@ export class UserProjectDetailService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, creatorId: string) {
     try {
-      const userProjectDetailById = await this.userProjectDetailModel.findById(
-        id,
-      );
+      const userProjectDetailById = await this.userProjectDetailModel.findOne({
+        _id: id,
+        creator: creatorId,
+      });
       if (!userProjectDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }

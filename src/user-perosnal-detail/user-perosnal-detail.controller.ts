@@ -6,10 +6,14 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
+  ExecutionContext,
 } from '@nestjs/common';
 import { UserPersonalDetailService } from './user-perosnal-detail.service';
 import { CreateUserPersonalDetailDto } from './dto/create-user-perosnal-detail.dto';
 import { UpdateUserPersonalDetailDto } from './dto/update-user-personal-detail.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Context } from 'src/auth/decorator/context';
 
 @Controller('user-personal-detail')
 export class UserPersonalDetailController {
@@ -18,30 +22,46 @@ export class UserPersonalDetailController {
   ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserPersonalDetailDto) {
-    return this.userPerosnalService.create(createUserDto);
+  @UseGuards(AuthGuard('jwt'))
+  create(
+    @Body() createUserPersonalDetailDto: CreateUserPersonalDetailDto,
+    @Context() ctx: any,
+  ) {
+    return this.userPerosnalService.create(
+      createUserPersonalDetailDto,
+      ctx._id,
+    );
   }
 
   @Get()
-  findAll() {
-    return this.userPerosnalService.findAll();
+  @UseGuards(AuthGuard('jwt'))
+  findAll(@Context() ctx: any) {
+    return this.userPerosnalService.findAll(ctx._id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userPerosnalService.findOne(id);
+  @UseGuards(AuthGuard('jwt'))
+  findOne(@Param('id') id: string, @Context() ctx: any) {
+    return this.userPerosnalService.findOne(id, ctx._id);
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
   update(
     @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserPersonalDetailDto,
+    @Body() updateUserPersonalDetailDto: UpdateUserPersonalDetailDto,
+    @Context() ctx: any,
   ) {
-    return this.userPerosnalService.update(id, updateUserDto);
+    return this.userPerosnalService.update(
+      id,
+      updateUserPersonalDetailDto,
+      ctx._id,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userPerosnalService.remove(id);
+  @UseGuards(AuthGuard('jwt'))
+  remove(@Param('id') id: string, @Context() ctx: any) {
+    return this.userPerosnalService.remove(id, ctx._id);
   }
 }

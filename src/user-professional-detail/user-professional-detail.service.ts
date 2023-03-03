@@ -17,11 +17,13 @@ export class UserProfessionalDetailService {
 
   async create(
     createUserProfessionalDetailDto: CreateUserProfessionalDetailDto,
+    creatorId: string,
   ) {
     try {
-      const userProfessionalDetail = new this.userProfessionalDetailModel(
-        createUserProfessionalDetailDto,
-      );
+      const userProfessionalDetail = new this.userProfessionalDetailModel({
+        ...createUserProfessionalDetailDto,
+        creator: creatorId,
+      });
       const newuserProfessionalDetail = await userProfessionalDetail.save();
       return {
         data: newuserProfessionalDetail,
@@ -33,10 +35,10 @@ export class UserProfessionalDetailService {
     }
   }
 
-  async findAll() {
+  async findAll(creatorId: string) {
     try {
       const userProfessionalDetails = await this.userProfessionalDetailModel
-        .find()
+        .find({ creator: creatorId })
         .exec();
       return {
         data: userProfessionalDetails,
@@ -48,10 +50,13 @@ export class UserProfessionalDetailService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, creatorId: string) {
     try {
       const userProfessionalDetailById =
-        await this.userProfessionalDetailModel.findById(id);
+        await this.userProfessionalDetailModel.findOne({
+          _id: id,
+          creator: creatorId,
+        });
       if (!userProfessionalDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -68,10 +73,14 @@ export class UserProfessionalDetailService {
   async update(
     id: string,
     updateUserProfessionalDetailDto: UpdateUserProfessionalDetailDto,
+    creatorId: string,
   ) {
     try {
       const userProfessionalDetailById =
-        await this.userProfessionalDetailModel.findById(id);
+        await this.userProfessionalDetailModel.findOne({
+          _id: id,
+          creator: creatorId,
+        });
       if (!userProfessionalDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -91,10 +100,13 @@ export class UserProfessionalDetailService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, creatorId: string) {
     try {
       const userProfessionalDetailById =
-        await this.userProfessionalDetailModel.findById(id);
+        await this.userProfessionalDetailModel.findOne({
+          _id: id,
+          creator: creatorId,
+        });
       if (!userProfessionalDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }

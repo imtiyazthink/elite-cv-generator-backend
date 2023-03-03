@@ -15,11 +15,15 @@ export class UserPersonalDetailService {
     private readonly userPersonalDetailModel: Model<UserPersonalDetailDocument>,
   ) {}
 
-  async create(createUserPersonalDetailDto: CreateUserPersonalDetailDto) {
+  async create(
+    createUserPersonalDetailDto: CreateUserPersonalDetailDto,
+    creatorId: string,
+  ) {
     try {
-      const userPersonalDetail = new this.userPersonalDetailModel(
-        createUserPersonalDetailDto,
-      );
+      const userPersonalDetail = new this.userPersonalDetailModel({
+        ...createUserPersonalDetailDto,
+        creator: creatorId,
+      });
       const newUserPersonalDetail = await userPersonalDetail.save();
       return {
         data: newUserPersonalDetail,
@@ -31,10 +35,10 @@ export class UserPersonalDetailService {
     }
   }
 
-  async findAll() {
+  async findAll(creatorId: string) {
     try {
       const userPersonalDetails = await this.userPersonalDetailModel
-        .find()
+        .find({ creator: creatorId })
         .exec();
       return {
         data: userPersonalDetails,
@@ -46,10 +50,10 @@ export class UserPersonalDetailService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, creatorId: string) {
     try {
       const userPersonalDetailById =
-        await this.userPersonalDetailModel.findById(id);
+        await this.userPersonalDetailModel.findOne({ _id: id, creator: creatorId });
       if (!userPersonalDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -66,10 +70,11 @@ export class UserPersonalDetailService {
   async update(
     id: string,
     updateUserPersonalDetailDto: UpdateUserPersonalDetailDto,
+    creatorId: string,
   ) {
     try {
       const userPersonalDetailById =
-        await this.userPersonalDetailModel.findById(id);
+        await this.userPersonalDetailModel.findOne({ _id: id, creator: creatorId });
       if (!userPersonalDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
@@ -89,10 +94,10 @@ export class UserPersonalDetailService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, creatorId: string) {
     try {
       const userPersonalDetailById =
-        await this.userPersonalDetailModel.findById(id);
+        await this.userPersonalDetailModel.findOne({ _id: id, creator: creatorId });
       if (!userPersonalDetailById) {
         throw new HttpException("Data Doesn't Exist!", HttpStatus.NOT_FOUND);
       }
